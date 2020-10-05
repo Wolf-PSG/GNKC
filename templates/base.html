@@ -1,0 +1,54 @@
+{% load  static %}
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    {% comment %} <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" /> {% endcomment %}
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title> GNKC </title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'base.css' %}">
+    <script src="https://kit.fontawesome.com/25a02deeaf.js" crossorigin="anonymous"></script>
+</head>
+<div class="wrapper">
+    <div class="sidebar">
+        <a href="/">
+            <img class="logo" src="{% static 'logo/logo.jpg' %}">
+        </a>
+        <h2 class="header"> GNKC </h2>
+
+        <ul>
+            <li><a href="/documentation"><i class="fas fa-book"></i> Philosophy </a></li>
+            <li><a href="/entities/list"><i class="fas fa-th-list"></i> Teachings </a></li>
+            <li><a href="/about"><i class="fas fa-info"></i> Enrolment </a></li>
+            <li><a href="/about"><i class="fas fa-info"></i> Media </a></li>
+            <li><a href="/about"><i class="fas fa-info"></i> Parental </a></li>
+
+
+        </ul>
+        <div class="social_media">
+            <a href="https://twitter.com/_Parmjit_" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://github.com/Wolf-PSG?tab=repositories" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fas fa-donate" target="_blank"></i></a>
+
+        </div>
+    </div>
+    <div class="main_content">
+
+        <body>
+            {% block content %}
+
+            {% endblock %}
+        </body>
+    </div>
+
+    <div class="footer">
+        {% comment %} <div>Icons made by <a href="https://www.flaticon.com/authors/those-icons"
+                title="Those Icons">Those
+                Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        {% endcomment %}
+    </div>
+</div>
+
+</html>

@@ -1,0 +1,35 @@
+.wrapper-content .container_body {
+    margin: 20px 0 20px 0;
+}
+
+.wrapper-content .section_form .heading_2 {
+    margin: 40px 0 10px 0;
+}
+
+.wrapper-content .section_form .container_form {
+    position: relative;
+    height: 200px;
+}
+
+.submitEntity_name {
+    position: absolute;
+    /* float: inline-end; */
+    top: 20px;
+    margin: 10px 0 10px 0;
+}
+
+.submitEntity_desc {
+    position: absolute;
+    bottom: 30px;
+}
+
+.submitEntity_btn {
+    position: absolute;
+    bottom: 0;
+}
+
+.form_container {
+    align-items: center;
+    width: 300px;
+    margin: 20px 0px 0px 0px;
+}
