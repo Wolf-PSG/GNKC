@@ -31,7 +31,7 @@ body {
 
 .wrapper .sidebar .logo {
     height: 100px;
-    /* margin: 0px 0px 0px 40px; */
+    margin: 0px 0px 0px 10px;
 }
 
 .wrapper .main_content {
@@ -78,7 +78,7 @@ body {
 }
 .info {
     width: 200px;
-    margin: 0px 0px 100px 0px;
+    /* margin: 0px 0px 100px 0px; */
 }
 
 .footer {

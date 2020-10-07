@@ -33,3 +33,17 @@
     width: 300px;
     margin: 20px 0px 0px 0px;
 }
+.signin {
+    font-family: Hack,
+        monospace;
+    background: #0F0F6D;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 2em;
+    padding: 1.5rem;
+    border: 0;
+    transition: all 0.5s;
+    border-radius: 10px;
+    width: auto;
+    position: relative;
+}
