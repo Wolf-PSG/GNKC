@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/index.css' %}">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<div class="wrapper-content">
+    <h1 class="heading_1"> Waheguru Ji Ka Khalsa Waheguru Ji Ki Fateh </h1>
+    <div class="container_body">
+        <h2> Gurus Teachings </h2>
+    </div>
+
+    <body>
+        <p>
+            Guru Nanak Khalsa College would endevour to develop the capability and awareness of its students who will be
+            able to
+            pass on and promote the values of Sikh Culture to the next generation in the world. The College would like
+            to
+            educate and inspire each of its students to be proud of our identity and speard the fundamental messages of
+            our
+            Gurus and inspire them to take higher Education and to be successful in the international job market.
+            <br>
+        </p>
+        <ul>
+            <li> Kirat Karo - Work honestly to earn your daily living. </li>
+            <li> Naam Japo - Always remember God and his belessings.Be Positive. </li>
+            <li>Wand Shako - Share your good fortune with the needy, hungry and the poor. </li>
+            <li> Maance Kee Jaat Sabhe Ekay Pehchanbho - Regard all human races as equal. </li>
+            <li> Guru Granth Ji Manion Pargat Guran Ki Deh - Regard the Sikh Scripture as our living Guru and have
+                complete
+                faith in the capital of the Guru. </li>
+            <li> Sarbat Ka Bhala - Seeking and working for the welfare of all mankind regardless of cast, colour, race,
+                ability or gender and promote social Harmony. </li>
+            <li>Vidya Vichari Tan Parupkari - Regard education as the best fundamental tool for personal development and
+                helping others.</li>
+        </ul>
+    </body>
+
+    <section class="section_form">
+        {% comment %} <h1 class="heading_2"> Have a creature you would like to add? </h1>
+        <h4 class="subheading_1"> write the name of your entity and a brief idea of who they <br>
+            I can research them and add them into the database!</h4> {% endcomment %}
+        {% comment %} <form id="form_email" action="/" method="post">
+            <div class="form_container">
+                <input class="submitEntity_btn" type="submit"></input>
+            </div>
+        </form> {% endcomment %}
+
+    </section>
+</div>
+{% endblock %}

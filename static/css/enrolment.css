@@ -1,0 +1,16 @@
+/* .form_enrol {
+    text-align: left;
+    display: inline;
+} */
+.form_enrol {
+    position: relative;
+}
+
+.field {
+    position: absolute;
+    align-items: center;
+}
+
+.messages {
+    animation: left-to-right 5s linear forwards;
+}

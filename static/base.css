@@ -22,15 +22,16 @@ body {
 .wrapper .sidebar {
     width: 200px;
     height: 100%;
-    background: #EEE8AA;
+    background: #e2ba5b;
     padding: 30px 0px;
     position: fixed;
     align-items: center;
+    overflow: scroll;
 }
 
 .wrapper .sidebar .logo {
     height: 100px;
-    margin: 0px 0px 0px 40px;
+    /* margin: 0px 0px 0px 40px; */
 }
 
 .wrapper .main_content {
@@ -51,7 +52,7 @@ body {
 }
 
 .wrapper .sidebar ul li a {
-    color: #bdb8d7;
+    color: black;
     display: block;
     margin: 10px;
 }
@@ -66,7 +67,7 @@ body {
 }
 
 .wrapper .sidebar ul li:hover a {
-    color: #fff;
+    color: black;
 }
 
 .wrapper .sidebar .social_media {
@@ -89,7 +90,7 @@ body {
     line-height: 45px;
     text-align: center;
     margin: 0 5px;
-    color: #bdb8d7;
+    color: black;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }

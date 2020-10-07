@@ -17,12 +17,19 @@
         {% comment %} <h1 class="heading_2"> Have a creature you would like to add? </h1>
         <h4 class="subheading_1"> write the name of your entity and a brief idea of who they <br>
             I can research them and add them into the database!</h4> {% endcomment %}
-        {% comment %} <form id="form_email" action="/" method="post">
-            <div class="form_container">
-                <input class="submitEntity_btn" type="submit"></input>
+        <form id="form_enrol" action="/enrolment" method="post">
+            {% csrf_token %}
+            {% for field in form  %}
+            <div class="field">
+                {{field.errors}}
+                {{field.label_tag}}
+                {{field}}
             </div>
-        </form> {% endcomment %}
+            <br>
 
-    </section> 
+            {% endfor %}
+            <input class="submit_btn" type="submit"></input>
+        </form>
+    </section>
 </div>
 {% endblock %}

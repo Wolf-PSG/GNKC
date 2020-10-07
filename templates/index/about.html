@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/index.css' %}">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<div class="wrapper-content">
+    <h1 class="heading_1"> About Us </h1>
+    <div class="container_body">
+        <h2> Our Principal: </h2>
+    </div>
+
+    <body>
+        <h4> Principal Mr. Niranjan Singh Dhillon RSA Dip. M.A. </h4>
+        <br>
+        <p>
+            Guru Nanak Khalsa College, Sedgley, Wolverhampton (GNKC) was started in 1989 by the Management committe of
+            Guru Nanak Gurdwara at the request of S. Ajit Singh Brainch, the present vice-principal of GNKC, in the year
+            1989. <br>
+            I started to teach Punjabi A Level at GNKC when I was teaching at Bilston Community College, Wolverhampton
+            in
+            1997/98. I had the opportunity to be the head of the school, now called GNKC. I have my own ideas, aims,
+            objectives and a vision for the future to expand the College and eventually make it a mainstream educational
+            institute for the local community as a whole. We want GNKC a regularly run weekly educational institute,
+            funded by the local authority, Government departments and other sources of funding so that we can promote
+            culture amoungst our younger generation, help the parents and the local community to be able to help their
+            children with their studies. Also help the younger generation to achieve good grades in their school
+            subjects. So they can have a better future in the world job market.
+            <br>
+        </p>
+    </body>
+
+    <body>
+        <br>
+        <h4> Our Success </h4>
+        <br>
+        <p>
+            Thanks to the commitment and dedication of the parents and the staff, the number of pupils and the staff
+            have doubled
+            over the last ten years. We are very pleased and proud to announce that we have now over 750 hundred pupils.
+            We hope to
+            increase the number in the year 2012/2013 to 800 pupils.
+            <br>
+            The parents bring their children to the college from as far as 20 miles radius of our City of Wolverhampton.
+            <br>
+            We humbly claim to be the biggest supplementary weekend college in the world teaching Panjabi from beginners
+            up to A
+            Level at Guru Nanak Gurdwara, Sedgley Street, Wolverhampton.
+            <br>
+        </p>
+    </body>
+
+    <section class="section_form">
+        {% comment %} <h1 class="heading_2"> Have a creature you would like to add? </h1>
+        <h4 class="subheading_1"> write the name of your entity and a brief idea of who they <br>
+            I can research them and add them into the database!</h4> {% endcomment %}
+        {% comment %} <form id="form_email" action="/" method="post">
+            <div class="form_container">
+                <input class="submitEntity_btn" type="submit"></input>
+            </div>
+        </form> {% endcomment %}
+
+    </section>
+</div>
+{% endblock %}

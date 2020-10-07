@@ -7,9 +7,11 @@
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title> GNKC </title>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}"
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'base.css' %}">
     <script src="https://kit.fontawesome.com/25a02deeaf.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <div class="wrapper">
     <div class="sidebar">
@@ -19,20 +21,17 @@
         <h2 class="header"> GNKC </h2>
 
         <ul>
-            <li><a href="/documentation"><i class="fas fa-book"></i> Philosophy </a></li>
-            <li><a href="/entities/list"><i class="fas fa-th-list"></i> Teachings </a></li>
-            <li><a href="/about"><i class="fas fa-info"></i> Enrolment </a></li>
-            <li><a href="/about"><i class="fas fa-info"></i> Media </a></li>
-            <li><a href="/about"><i class="fas fa-info"></i> Parental </a></li>
+            <li><a href="/about"><i class="fas fa-info"></i> About </a></li>
+            <li><a href="/philosophy"><i class="fas fa-chalkboard-teacher"></i> Philosophy </a></li>
+            <li><a href="/teachings"><i class="fas fa-book"></i> Teachings </a></li>
+            <li><a href="/enrolment"> <i class="fas fa-th-list"></i> Enrolment - Open for September 2020/21 </a></li>
+            <li><a href="/media"><i class="fas fa-photo-video"></i> Media </a></li>
+            <li><a href="/parental"><i class="fas fa-info"></i> Parental </a></li>
 
 
         </ul>
-        <div class="social_media">
-            <a href="https://twitter.com/_Parmjit_" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="https://github.com/Wolf-PSG?tab=repositories" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fas fa-donate" target="_blank"></i></a>
 
-        </div>
+        <img class="info" src="{% static 'image/Covid19Poster.jpg' %}">
     </div>
     <div class="main_content">
 
@@ -43,12 +42,23 @@
         </body>
     </div>
 
-    <div class="footer">
-        {% comment %} <div>Icons made by <a href="https://www.flaticon.com/authors/those-icons"
-                title="Those Icons">Those
-                Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-        {% endcomment %}
-    </div>
+        {% if messages %}
+        <script>
+            $("#message_container").click(function () {
+                console.log('click')
+                $(this).parent().parent().remove();
+            });
+        </script>
+        <div class="footer">
+            <div class="message_container" id="message_container">
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="message" {% endif %}>{{ message }}</li>
+                        {% endfor %}
+                </ul>
+            </div>
+            </div>
+            {% endif %}
 </div>
 
 </html>
