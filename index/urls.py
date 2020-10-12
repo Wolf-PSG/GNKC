@@ -10,4 +10,6 @@ urlpatterns = [
     path('enrolment', views.enrolment, name='enrolment'),
     path('media', views.media, name='media'),
     path('parental', views.parental, name='parental'),
+    path('dashboard', views.dashboard, name='dashboard'),
+    path('homework', views.homework, name='homework'),
 ]

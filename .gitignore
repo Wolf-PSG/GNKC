@@ -135,7 +135,7 @@ pythonenv*
 
 # mkdocs documentation
 /site
-
+accounts/
 # mypy
 .mypy_cache/
 .dmypy.json

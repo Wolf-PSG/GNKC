@@ -26,10 +26,26 @@
             <li><a href="/enrolment"> <i class="fas fa-th-list"></i> Enrolment - Open for September 2020/21 </a></li>
             <li><a href="/media"><i class="fas fa-photo-video"></i> Media </a></li>
             <li><a href="/parental"><i class="fas fa-info"></i> Parental </a></li>
-
-
         </ul>
-    </div>
+        </div>
+        <div class="nav">
+ 
+                {% if user.is_authenticated %}
+                <ul>
+                    <li><a class="nav_btn" href="javascript: {document.getElementById('logout').submit()}"> Logout </a>
+                        <form action="{% url 'logout' %}" method="POST" id="logout">
+                            {% csrf_token %}
+                            <input type="hidden">
+                        </form>
+                    </li>
+                    <li><a class="nav_btn" href="/dashboard"> Dashboard </a> </li>
+                    {% if user.is_staff == True %}
+                    <li><a class="nav_btn" href="/homework"> Set Homework </a> </li>
+                    <li><a class="nav_btn" href="/quiz"> Quiz </a></li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+        </div>
     <div class="main_content">
 
         <body>

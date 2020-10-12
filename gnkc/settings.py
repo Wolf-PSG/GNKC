@@ -28,14 +28,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
+    # 'accounts',
     'django.contrib.admin',
     'index.apps.IndexConfig',
     'students.apps.StudentsConfig',
     'teachers.apps.TeachersConfig',
+    'homework.apps.HomeworkConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -70,6 +71,7 @@ TEMPLATES = [
         },
     },
 ]
+# AUTH_USER_MODEL = 'accounts.Account'
 
 WSGI_APPLICATION = 'gnkc.wsgi.application'
 
@@ -79,11 +81,13 @@ WSGI_APPLICATION = 'gnkc.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'gnkcDB',
+        'USER': 'postgres',
+        'PASSWORD': '1199',
+        'HOST': 'localhost'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -123,7 +127,7 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-STATICFILES_DIRS= [
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'index/static/')
 ]
 

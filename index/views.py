@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.core.mail import send_mail
 from django.contrib import messages
 from .emailForm import emailForm
 from .enrolmentForm import enrolmentForm
-
+from homework.forms import HomeworkForm
+from teachers.models import Teacher
+from homework.models import Homework
 # Create your views here.
 def index(request):
     return render(request, 'index/index.html')
@@ -53,3 +55,43 @@ def parental(request):
     else:
       form = emailForm()
     return render(request, 'index/parental.html', {'form': form})
+
+
+def dashboard(request):
+    if request.user.is_authenticated:
+        return render(request, 'dashboard/dashboard.html')
+    else:
+        return redirect('index')
+
+
+def homework(request):
+    if request.user.is_authenticated & request.user.is_staff:
+        if request.method == 'POST':
+            teacher_id = Teacher.objects.get(pk=request.user.id)
+
+            data = request.POST.copy()
+            data['teacher'] = request.user.id
+            request.POST = data
+            print(request.POST)
+            form = HomeworkForm(request.POST)
+            if form.is_valid():
+                print(request.user.id)
+                new_form = form.save(commit=False)
+                new_form.teacher = teacher_id
+                new_form.save()
+                # post = Homework(form)
+                # post.save()
+                # messages.info(request, 'Form sent')
+                print('worked')
+                return render(request, 'index/index.html')
+            else:
+                print('error in form')
+                form = HomeworkForm()
+                return render(request, 'dashboard/setHomework.html', {'form': form})
+        else:
+            form = HomeworkForm()
+            return render(request, 'dashboard/setHomework.html', {'form': form})
+    else:
+        return redirect('index')
+
+

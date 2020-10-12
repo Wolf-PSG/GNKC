@@ -58,7 +58,14 @@
             <h2> Feedback: </h2>
             <div class="form_container">
                 {% csrf_token %}
-                {{form}}
+                {% for field in form  %}
+                <div class="field">
+                    {{field.errors}}
+                    {{field.label_tag}}
+                    {{field}}
+                </div>
+                <br>
+                {% endfor %}
                 <input class="submit_btn" type="submit"></input>
             </div>
         </form>
