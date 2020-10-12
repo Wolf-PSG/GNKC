@@ -3,14 +3,31 @@
 {% block content %}
 
 <head>
-    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/index.css' %}">
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/homework.css' %}">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <div class="wrapper-content">
     <h1 class="heading_1"> Dashboard </h1>
     <div class="container_body">
-        <h3> Homework </h3>
+        <h3> Set Homework </h3>
+        <br>
+        {% if homework %}
+        {% for work in homework %}
+        <a>
+            <div class="homework_container">
+                {% comment %} <img class="entity_img" src="{{entity.image.url}}" /> {% endcomment %}
+                <h2 class="homework_title"> {{ work.title }} </h2>
+                <h5 class="homework_desc"> {{ work.description }}</h5>
+                {% comment %} entity.get_*field*_display - displays the humanreadble values {% endcomment %}
+                <h5 class="homework_due"> {{ work.due }} </h5>
+                <h6 class="homework_teacher"> set by: {{work.teacher.user.first_name}} {{ work.teacher.user.last_name}}
+                </h6>
+            </div>
+        </a>
+        <br>
+        {% endfor %}
+        {% endif %}
     </div>
 
 </div>
