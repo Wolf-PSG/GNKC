@@ -11,9 +11,9 @@ class Homework(models.Model):
 		 	  ('4', 'Level 4'),
 		 	  ('5', 'Level 5'),
 		 	  ('6', 'Level 6'),
-		 	  ('G', 'GCSE'),
-		 	  ('AS', 'AS-Level'),
-		 	  ('A', 'A-Level')
+            ('7', 'GCSE'),
+            ('8', 'AS-Level'),
+            ('9', 'A-Level')
   	)
 
 	classOptions = (

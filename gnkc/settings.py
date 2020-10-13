@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'students.apps.StudentsConfig',
     'teachers.apps.TeachersConfig',
     'homework.apps.HomeworkConfig',
+    'quiz.apps.QuizConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

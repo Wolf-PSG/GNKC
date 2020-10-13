@@ -6,12 +6,14 @@ from homework.forms import HomeworkForm
 from homework.models import Homework
 from students.models import Students
 from teachers.models import Teacher
-
+from quiz.models import Quiz, Question
 from .emailForm import emailForm
 from .enrolmentForm import enrolmentForm
 
 
 def index(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
     return render(request, 'index/index.html')
 
 
@@ -119,3 +121,7 @@ def homework(request):
             return render(request, 'dashboard/setHomework.html', {'form': form})
     else:
         return redirect('index')
+
+
+def quiz(request):
+    return render(request, 'quiz/quiz.html')
