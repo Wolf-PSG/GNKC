@@ -10,16 +10,16 @@
 <div class="wrapper-content">
     <h1 class="heading_1"> Dashboard </h1>
     <div class="container_body">
-        <h3> Quiz </h3>
+        <h3> Quizzes </h3>
         <br>
-{% for question in questions  %}
+
+        {% for quiz in quizzes  %}
+        <a href="/quizzes/{{quiz.id}}">
             <div class="homework_container">
                 {% comment %} <img class="entity_img" src="{{entity.image.url}}" /> {% endcomment %}
-                <h2 class="homework_title"> {{ question.title }} </h2>
-                <h5 class="homework_desc"> {{ question.answer_1 }}</h5>
-                <h5 class="homework_desc"> {{ question.answer_2 }}</h5>
-                <h5 class="homework_desc"> {{ question.answer_3 }}</h5>
-                <h5 class="homework_desc"> {{ question.answer_4 }}</h5>
+                <h2 class="homework_title"> {{ quiz.title }} </h2>
+                <h5 class="homework_desc"> {{ quiz.get_classes_display }}</h5>
+                <h5 class="homework_desc"> {{ quiz.get_level_display }}</h5>
 
                 {% comment %} entity.get_*field*_display - displays the humanreadble values
                 <h5 class="homework_due"> {{ work.due }} </h5>

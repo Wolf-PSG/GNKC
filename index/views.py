@@ -123,5 +123,17 @@ def homework(request):
         return redirect('index')
 
 
-def quiz(request):
-    return render(request, 'quiz/quiz.html')
+def quizzes(request):
+    quizzes = Quiz.objects.select_related('teacher').filter(teacher=2)
+    print(quizzes)
+    quiz_Data = list(quizzes.values())
+    print(quiz_Data)
+    # print(quiz_id[0]['id'])
+    # questions = Question.objects.select_related(
+    #     'quiz').get(quiz=quiz_id[0]['id'])
+    # print(questions.answer_1)
+    context = {
+        'quizzes': quizzes,
+        # 'questions': questions
+    }
+    return render(request, 'quiz/quizzes.html', context)
