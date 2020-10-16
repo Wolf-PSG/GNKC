@@ -48,9 +48,15 @@ class Question(models.Model):
 	answer_2 = models.CharField(max_length=50)
 	answer_3 = models.CharField(max_length=50)
 	answer_4 = models.CharField(max_length=50)
-	correct_answer = models.CharField(
-		max_length=2, choices=answerOptions, default=1)
+	#correct_answer = models.CharField(
+	#	max_length=2, choices=answerOptions, default=1)
+	correct_answer = models.IntegerField()
 	image_path = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
 
 	def __str__(self):
 		return self.title
+
+	@property
+	def correct_answer_value(self):return (
+            self.answer_1, self.answer_2, self.answer_3, self.answer_4
+        )[self.correct_answer-1]  # add back -1

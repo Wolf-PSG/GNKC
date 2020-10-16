@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from .models import Question, Quiz
 # Create your views here.
 
@@ -18,9 +18,7 @@ def quiz(request, quizID):
         try:
             if (request.user.classes == quiz.classes) & (request.user.level == quiz.level) & (request.user.teacher == quiz.teacher_id):
                 print('whoops 1')
-                questions = Question.objects.select_related(
-                    'quiz').filter(quiz=quizID)
-                questionList = list(questions.values())
+                questionList = get_list_or_404(Question, quiz=quizID)
 
                 context = {
                     'questions': questionList
@@ -28,10 +26,8 @@ def quiz(request, quizID):
         except:
             if (request.user.id == quiz.teacher_id):
                 print('whoops 2')
-                questions = Question.objects.select_related(
-                    'quiz').filter(quiz=quizID)
-                questionList = list(questions.values())
-
+                questionList = get_list_or_404(Question, quiz=quizID)
+                print(questionList[0].correct_answer_value)
                 context = {
                     'questions': questionList
                 }

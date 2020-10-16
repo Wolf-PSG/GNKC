@@ -59,8 +59,8 @@ def parental(request):
             subject = form.cleaned_data['name']
             email = form.cleaned_data['email']
             message = form.cleaned_data['message']
-            send_mail(subject, (email + message), 'mythosAPI@gmail.com',
-                      ['parmjit.singh.1199@gmail.com'], fail_silently=False)
+            send_mail(subject, (f"from {email} \n {message}"), 'mythosAPI@gmail.com', [
+                      'parmjit.singh.1199@gmail.com'], fail_silently=False)
     else:
         form = emailForm()
     return render(request, 'index/parental.html', {'form': form})

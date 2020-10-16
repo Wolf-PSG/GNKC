@@ -11,20 +11,15 @@ def login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-
         user = auth.authenticate(username=username, password=password)
-        if user.is_staff == True:
-            print('staff')
-        else:
-            print('student')
         print(user)
         if user is not None:
             auth.login(request, user)
             print('success')
             return redirect('dashboard')
         else:
-            print('fail')
-            return redirect('index')
+            return render(request, 'user/login.html', {'form': loginForm()})
+
     else:
         return render(request, 'user/login.html', {'form': loginForm()})
 

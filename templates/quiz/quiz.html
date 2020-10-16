@@ -16,10 +16,22 @@
             <div class="homework_container">
                 {% comment %} <img class="entity_img" src="{{entity.image.url}}" /> {% endcomment %}
                 <h2 class="homework_title"> {{ question.title }} </h2>
+                <input type="radio" name="answer">
                 <h5 class="homework_desc"> {{ question.answer_1 }}</h5>
+                <br>
+                <input type="radio" name="answer">
+                <br>
                 <h5 class="homework_desc"> {{ question.answer_2 }}</h5>
+                <input type="radio" name="answer">
+                <br>
                 <h5 class="homework_desc"> {{ question.answer_3 }}</h5>
+                <br>
+                <input type="radio" name="answer">
                 <h5 class="homework_desc"> {{ question.answer_4 }}</h5>
+                <br>
+                <h4 class="homework_correct hidden" id="{{question.id}}">
+                    {{question.correct_answer_value}}
+                </h4>
 
                 {% comment %} entity.get_*field*_display - displays the humanreadble values
                 <h5 class="homework_due"> {{ work.due }} </h5>
