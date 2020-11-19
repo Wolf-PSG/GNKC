@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'gnkc.urls'
@@ -73,6 +74,34 @@ TEMPLATES = [
         },
     },
 ]
+
+# RESPONSIVE_MEDIA_QUERIES = {
+#     'small': {
+#         'verbose_name': ('Small screens'),
+#         'min_width': None,
+#         'max_width': 640,
+#     },
+#     'medium': {
+#         'verbose_name': ('Medium screens'),
+#         'min_width': 641,
+#         'max_width': 1024,
+#     },
+#     'large': {
+#         'verbose_name': ('Large screens'),
+#         'min_width': 1025,
+#         'max_width': 1440,
+#     },
+#     'xlarge': {
+#         'verbose_name': ('XLarge screens'),
+#         'min_width': 1441,
+#         'max_width': 1920,
+#     },
+#     'xxlarge': {
+#         'verbose_name': ('XXLarge screens'),
+#         'min_width': 1921,
+#         'max_width': None,
+#     }
+# }
 # AUTH_USER_MODEL = 'accounts.Account'
 
 WSGI_APPLICATION = 'gnkc.wsgi.application'
@@ -109,7 +138,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-#sendgrid
+# sendgrid
 load_dotenv()
 SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
 
@@ -143,3 +172,7 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+
+

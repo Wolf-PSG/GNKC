@@ -101,8 +101,9 @@ def dashboard(request):
 def homework(request):
     if request.user.is_authenticated & request.user.is_staff:
         if request.method == 'POST':
+            print(request.user.pk)
             teacher_id = Teacher.objects.select_related(
-                'user').get(user=request.user.id)
+                'user').get(user_id=request.user.pk)
             print(request.POST)
             form = HomeworkForm(request.POST)
             if form.is_valid():
@@ -124,16 +125,22 @@ def homework(request):
 
 
 def quizzes(request):
-    quizzes = Quiz.objects.select_related('teacher').filter(teacher=2)
-    print(quizzes)
-    quiz_Data = list(quizzes.values())
-    print(quiz_Data)
-    # print(quiz_id[0]['id'])
-    # questions = Question.objects.select_related(
-    #     'quiz').get(quiz=quiz_id[0]['id'])
-    # print(questions.answer_1)
-    context = {
-        'quizzes': quizzes,
-        # 'questions': questions
-    }
-    return render(request, 'quiz/quizzes.html', context)
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            teacher_id = Teacher.objects.select_related(
+                'user').get(user_id=request.user.pk)
+            quizzes = Quiz.objects.select_related(
+                'teacher').filter(teacher=teacher_id)
+            print(quizzes)
+            quiz_Data = list(quizzes.values())
+            print(quiz_Data)
+            # print(quiz_id[0]['id'])
+            # questions = Question.objects.select_related(
+            #     'quiz').get(quiz=quiz_id[0]['id'])
+            # print(questions.answer_1)
+            context = {
+                'quizzes': quizzes,
+                # 'questions': questions
+            }
+            return render(request, 'quiz/quizzes.html', context)
+    return redirect('/')

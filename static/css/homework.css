@@ -1,3 +1,9 @@
 .homework_container {
 	background: #dedee0;
 }
+.homework_container .homework_title,
+.homework_container .homework_due,
+.homework_container .homework_desc,
+.homework_container .homework_teacher {
+	color: black;
+}

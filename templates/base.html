@@ -2,58 +2,104 @@
 <!DOCTYPE html>
 <html lang='en'>
 
-<head>
-    {% comment %} <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" /> {% endcomment %}
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title> GNKC </title>
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}"
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'base.css' %}">
-    <script src="https://kit.fontawesome.com/25a02deeaf.js" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-<div class="wrapper">
-    <div class="sidebar">
-        <a href="/">
-            <img class="logo" src="{% static 'logo/logo.jpg' %}">
-        </a>
-        <img class="info" src="{% static 'image/Covid19Poster.jpg' %}">
-        <ul>
-            <li><a href="/about"><i class="fas fa-info"></i> About </a></li>
-            <li><a href="/philosophy"><i class="fas fa-chalkboard-teacher"></i> Philosophy </a></li>
-            <li><a href="/teachings"><i class="fas fa-book"></i> Teachings </a></li>
-            <li><a href="/enrolment"> <i class="fas fa-th-list"></i> Enrolment - Open for September 2020/21 </a></li>
-            <li><a href="/media"><i class="fas fa-photo-video"></i> Media </a></li>
-            <li><a href="/parental"><i class="fas fa-info"></i> Parental </a></li>
-        </ul>
-        </div>
-        <div class="nav">
- 
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title> GNKC </title>
+        <link rel="shortcut icon" href="{% static 'favicon.ico' %}" <meta name='viewport'
+            content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' href="{% static 'base.css' %}">
+        <script src="https://kit.fontawesome.com/25a02deeaf.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <div class="wrapper">
+        {% comment %} Mobile Navigation {% endcomment %}
+        <div class="menu">
+            <script>
+                function openNav() {
+                    document.getElementById('sidenav').style.width = "250px";
+                }
+
+                function closeNav() {
+                    document.getElementById('sidenav').style.width = "0";
+                }
+            </script>
+            <a class="icon" id="icon" onclick="openNav()"><i class="fa fa-bars"></i></a>
+            <div class="sidenav" id="sidenav">
+                <a href="javascript:void(0);"><i class="fa fa-arrow-left" onclick="closeNav()"></i></a>
                 {% if user.is_authenticated %}
-                <ul>
-                    <li><a class="nav_btn" href="javascript: {document.getElementById('logout').submit()}"> Logout </a>
-                        <form action="{% url 'logout' %}" method="POST" id="logout">
-                            {% csrf_token %}
-                            <input type="hidden">
-                        </form>
-                    </li>
-                    <li><a class="nav_btn" href="/dashboard"> Dashboard </a> </li>
-                    {% if user.is_staff == True %}
-                    <li><a class="nav_btn" href="/homework"> Set Homework </a> </li>
-                    <li><a class="nav_btn" href="/quizzes"> Quiz </a></li>
-                    {% endif %}
-                </ul>
+                {% comment %} Check authentication {% endcomment %}
+                <li><a href="/dashboard"><i class="fas fa-columns"></i> Dashboard </a> </li>
+                {% if user.is_staff == True %}
+                <li><a href="/homework"><i class="fas fa-book"></i> Set Homework </a> </li>
+                <li><a href="/quizzes"><i class="fas fa-graduation-cap"></i> Quiz </a></li>
                 {% endif %}
+                <li><a href="javascript: {document.getElementById('logout').submit()}"><i
+                            class="fas fa-sign-out-alt"></i> Logout </a>
+                    <form action="{% url 'logout' %}" method="POST" id="logout">
+                        {% csrf_token %}
+                        <input type="hidden">
+                    </form>
+                </li>
+                {% else %}
+                <li><a href="/"">Home</a></li>
+                <li><a href="/about"><i class="fas fa-info"></i> About </a></li>
+                <li><a href="/philosophy"><i class="fas fa-chalkboard-teacher"></i> Philosophy </a></li>
+                <li><a href="/teachings"><i class="fas fa-book"></i> Teachings </a></li>
+                <li><a href="/enrolment"> <i class="fas fa-th-list"></i> Enrolment - Open for September
+                        2020/21 </a>
+                </li>
+                <li><a href="/media"><i class="fas fa-photo-video"></i> Media </a></li>
+                <li><a href="/parental"><i class="fas fa-info"></i> Parental </a></li>
+                {% endif %}
+                <a href="/"><img class="logo" src="{% static 'logo/logo.jpg' %}"></a>
+                <img class="info" src="{% static 'image/Covid19Poster.jpg' %}">
+                </div>
         </div>
-    <div class="main_content">
 
-        <body>
-            {% block content %}
+        {% comment %} Desktop sidebar {% endcomment %}
+        <div class="sidebar">
+            <a href="/">
+                <img class="logo" src="{% static 'logo/logo.jpg' %}">
+            </a>
+            <img class="info" src="{% static 'image/Covid19Poster.jpg' %}">
+            <ul class="sidebar-list">
+                {% if user.is_authenticated %}
+                {% comment %} Check authentication {% endcomment %}
+                <li><a href="/dashboard"><i class="fas fa-columns"></i> Dashboard </a> </li>
+                {% if user.is_staff == True %}
+                <li><a href="/homework"><i class="fas fa-book"></i> Set Homework </a> </li>
+                <li><a href="/quizzes"><i class="fas fa-graduation-cap"></i> Quiz </a></li>
+                {% endif %}
+                <li><a href="javascript: {document.getElementById('logout').submit()}"><i
+                            class="fas fa-sign-out-alt"></i> Logout </a>
+                    <form action="{% url 'logout' %}" method="POST" id="logout">
+                        {% csrf_token %}
+                        <input type="hidden">
+                    </form>
+                </li>
+                {% else %}
+                <li><a href="/about"><i class="fas fa-info"></i> About </a></li>
+                <li><a href="/philosophy"><i class="fas fa-chalkboard-teacher"></i> Philosophy </a></li>
+                <li><a href="/teachings"><i class="fas fa-book"></i> Teachings </a></li>
+                <li><a href="/enrolment"> <i class="fas fa-th-list"></i> Enrolment - Open for September
+                        2020/21 </a>
+                </li>
+                <li><a href="/media"><i class="fas fa-photo-video"></i> Media </a></li>
+                <li><a href="/parental"><i class="fas fa-info"></i> Parental </a></li>
+                {% endif %}
+            </ul>
+            <div class="nav">
+            </div>
+        </div>
+        <div class="main_content">
 
-            {% endblock %}
-        </body>
-    </div>
+            <body>
+                {% block content %}
+
+                {% endblock %}
+            </body>
+        </div>
 
         {% if messages %}
         <script>
@@ -70,8 +116,8 @@
                         {% endfor %}
                 </ul>
             </div>
-            </div>
-            {% endif %}
-</div>
+        </div>
+        {% endif %}
+    </div>
 
 </html>

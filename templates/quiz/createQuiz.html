@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/homework.css' %}">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<div class="wrapper-content">
+    <h1 class="heading_1"> Create Quiz </h1>
+    <div class="container_body">
+        <form action="/quizzes/create" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="quiz_container">
+                {{field.error}}
+                {{field.label_tag}}
+                {{field}}
+            </div>
+            {% endfor %}
+            <input class="submit_btn" type="submit" />
+        </form>
+    </div>
+
+</div>
+{% endblock %}
