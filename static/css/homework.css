@@ -1,5 +1,20 @@
+.container_body {
+	/* display: flex; */
+	/* position: relative; */
+}
+
 .homework_container {
 	background: #dedee0;
+	border: black 1px solid;
+	padding: 10px;
+	margin-top: 50px;
+	margin-right: 30px;
+	box-sizing: border-box;
+	min-width: 200px;
+	max-width: 50%;
+	position: relative;
+	float: left;
+	max-height: 300px;
 }
 .homework_container .homework_title,
 .homework_container .homework_due,
@@ -8,23 +23,10 @@
 	color: black;
 }
 
-.container_body {
-	width: 100%;
-}
-
-.quiz_container {
-	width: 80%;
-	background: #dedee0;
-	color: black;
-
-
-}
-.score_container {
+.homework_container .delete_homework {
+	/* background: #dedee0; */
+	/* position: absolute; */
+	margin: 0;
+	top: 0;
 	float: right;
-	width: 500px;
-}
-
-.score_container .score {
-	width: 100%;
-	display: inline-block;
 }

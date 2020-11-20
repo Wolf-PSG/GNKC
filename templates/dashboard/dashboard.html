@@ -14,22 +14,17 @@
         <br>
         {% if homework %}
         {% for work in homework %}
-        <a>
-            <div class="homework_container">
-                {% comment %} <img class="entity_img" src="{{entity.image.url}}" /> {% endcomment %}
-                <h2 class="homework_title"> {{ work.title }} </h2>
-                <h5 class="homework_desc"> {{ work.description }}</h5>
-                {% comment %} entity.get_*field*_display - displays the humanreadble values {% endcomment %}
-                <h5 class="homework_due"> {{ work.due }} </h5>
-                <h6 class="homework_teacher"> set by: {{work.teacher.user.first_name}} {{ work.teacher.user.last_name}}
-                </h6>
-                {% if user.is_staff %}
-                <a href="/homework/delete/{{work.pk}}"> <i class="fas fa-times-circle"></i></a>
-                {% endif %}
+        <div class="homework_container">
+            {% if user.is_staff %}
+            <a class="delete_homework" href="/homework/delete/{{work.pk}}"> <i class="fas fa-times-circle"></i></a>
+            {% endif %}
+            <h2 class="homework_title"> {{ work.title }} </h2>
+            <h5 class="homework_desc"> {{ work.description }}</h5>
+            <h5 class="homework_due"> {{ work.due }} </h5>
+            <h6 class="homework_teacher"> set by: {{work.teacher.user.first_name}} {{ work.teacher.user.last_name}}
+            </h6>
 
-            </div>
-        </a>
-        <br>
+        </div>
         {% endfor %}
         {% endif %}
     </div>

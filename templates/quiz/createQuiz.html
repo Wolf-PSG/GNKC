@@ -3,7 +3,7 @@
 {% block content %}
 
 <head>
-    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/homework.css' %}">
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/quiz.css' %}">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -12,7 +12,7 @@
 
     {% if id %}
     <div class="container_body">
-        <h1 class="heading_1"> Update Quiz </h1>
+        <h1 class="heading_1"> Update Quiz: </h1>
         <form action="/quizzes/update/quiz/{{id}}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {% for field in form %}
@@ -32,7 +32,7 @@
     </div>
 
     <div class="question_container">
-        <h1> Update Questions </h1>
+        <h1> Update Questions: </h1>
         {% for question in questions %}
         <br>
         <div class="question_container">
