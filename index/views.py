@@ -79,21 +79,17 @@ def dashboard(request):
             }
             return render(request, 'dashboard/dashboard.html', context)
         else:
-            print(request.user.id)
-
             student = get_object_or_404(Students, user_id=request.user.id)
-            print(student.classes)
-            homework_queryset = Homework.objects.select_related('teacher').filter(
-                teacher=student.teacher)
+            # homework_queryset = Homework.objects.select_related('teacher').filter(
+            # teacher=student.teacher)
 
             homework = get_list_or_404(
-                Homework, classes=student.classes, level=student.level)
+                Homework, classes=student.classes, level=student.level, teacher=student.teacher)
 
             context = {
                 'homework': homework
             }
             return render(request, 'dashboard/dashboard.html', context)
-            # student = Teacher.objects.select_related('')
     else:
         return redirect('index')
 
@@ -141,6 +137,18 @@ def quizzes(request):
             context = {
                 'quizzes': quizzes,
                 # 'questions': questions
+            }
+            return render(request, 'quiz/quizzes.html', context)
+        else:
+            student = get_object_or_404(Students, user_id=request.user.id)
+            # homework_queryset = Homework.objects.select_related('teacher').filter(
+            # teacher=student.teacher)
+
+            quiz = get_list_or_404(
+                Quiz, classes=student.classes, level=student.level, teacher=student.teacher)
+
+            context = {
+                'quizzes': quiz
             }
             return render(request, 'quiz/quizzes.html', context)
     return redirect('/')

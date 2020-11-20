@@ -23,6 +23,10 @@
                 <h5 class="homework_due"> {{ work.due }} </h5>
                 <h6 class="homework_teacher"> set by: {{work.teacher.user.first_name}} {{ work.teacher.user.last_name}}
                 </h6>
+                {% if user.is_staff %}
+                <a href="/homework/delete/{{work.pk}}"> <i class="fas fa-times-circle"></i></a>
+                {% endif %}
+
             </div>
         </a>
         <br>

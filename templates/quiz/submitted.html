@@ -9,24 +9,20 @@
 </head>
 
 <div class="wrapper-content">
-    <h1>{{score}}</h1>
-
+    <h1>You scored {{score}}</h1>
+    <br>
+    <h1> Your score has been sent to your teacher </h1>
+    {% if wrongAnswer|length == 0 %}
+    <h1> Well Done you got all Questions Correct </h1>
+    {% else %}
     {% for question in wrongAnswer  %}
     <div>
-        <h2>{{question.title}}
-            <h2>
-                <h2>{{question.answer_1}}
-                    <h2>
-                        <h2>{{question.answer_2}}
-                            <h2>
-                                <h2>{{question.answer_3}}
-                                    <h2>
-                                        <h2>{{question.answer_4}}
-                                            <h2>
-                                                <h2>{{question.correct_answer_value}}
-                                                    <h2>
+        <h2> You got the question: '{{question.title}}' wrong </h2>
+        <h2> This was the correct answer: {{question.correct_answer_value}} </h2>
+        <br>
     </div>
     {% endfor %}
+{% endif %}
 </div>
 
 {% endblock %}

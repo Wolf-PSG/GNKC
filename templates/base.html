@@ -28,11 +28,10 @@
             <div class="sidenav" id="sidenav">
                 <a href="javascript:void(0);"><i class="fa fa-arrow-left" onclick="closeNav()"></i></a>
                 {% if user.is_authenticated %}
-                {% comment %} Check authentication {% endcomment %}
                 <li><a href="/dashboard"><i class="fas fa-columns"></i> Dashboard </a> </li>
+                <li><a href="/quizzes"><i class="fas fa-graduation-cap"></i> Quizzes </a></li>
                 {% if user.is_staff == True %}
                 <li><a href="/homework"><i class="fas fa-book"></i> Set Homework </a> </li>
-                <li><a href="/quizzes"><i class="fas fa-graduation-cap"></i> Quiz </a></li>
                 {% endif %}
                 <li><a href="javascript: {document.getElementById('logout').submit()}"><i
                             class="fas fa-sign-out-alt"></i> Logout </a>
@@ -43,7 +42,7 @@
                 </li>
                 {% else %}
                 <li><a href="/"">Home</a></li>
-                <li><a href="/about"><i class="fas fa-info"></i> About </a></li>
+                <li><a href="/about"> <i class="fas fa-info"></i> About </a></li>
                 <li><a href="/philosophy"><i class="fas fa-chalkboard-teacher"></i> Philosophy </a></li>
                 <li><a href="/teachings"><i class="fas fa-book"></i> Teachings </a></li>
                 <li><a href="/enrolment"> <i class="fas fa-th-list"></i> Enrolment - Open for September
@@ -54,7 +53,7 @@
                 {% endif %}
                 <a href="/"><img class="logo" src="{% static 'logo/logo.jpg' %}"></a>
                 <img class="info" src="{% static 'image/Covid19Poster.jpg' %}">
-                </div>
+            </div>
         </div>
 
         {% comment %} Desktop sidebar {% endcomment %}
@@ -67,9 +66,10 @@
                 {% if user.is_authenticated %}
                 {% comment %} Check authentication {% endcomment %}
                 <li><a href="/dashboard"><i class="fas fa-columns"></i> Dashboard </a> </li>
+                <li><a href="/quizzes"><i class="fas fa-graduation-cap"></i> Quizzes </a></li>
+
                 {% if user.is_staff == True %}
                 <li><a href="/homework"><i class="fas fa-book"></i> Set Homework </a> </li>
-                <li><a href="/quizzes"><i class="fas fa-graduation-cap"></i> Quiz </a></li>
                 {% endif %}
                 <li><a href="javascript: {document.getElementById('logout').submit()}"><i
                             class="fas fa-sign-out-alt"></i> Logout </a>

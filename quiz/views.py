@@ -2,41 +2,43 @@ from django.http.response import Http404
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from .models import Question, Quiz
 from teachers.models import Teacher
+from students.models import Students
+from score.models import Score
 from quiz.form import quizForm
 from quiz.questionForm import questionForm
+from django.http import HttpResponseRedirect
+
+# def filterID(ID):
+#     if(question.id == questionID):
+#         del questionList[index
 
 
 def quiz(request, quizID):
-    try:
-        quiz = get_object_or_404(Quiz, id=quizID)
-        print(request.user.id)
-        print(quiz.teacher_id)
-        print(quiz.classes)
-        print(quiz.level)
-    except:
-        print('whoops 3')
-        return redirect('index')
-
+    user = {}
     if request.user.is_authenticated:
         try:
-            if (request.user.classes == quiz.classes) & (request.user.level == quiz.level) & (request.user.teacher == quiz.teacher_id):
+            user = get_object_or_404(Students, user_id=request.user.id)
+            quiz = get_object_or_404(Quiz, id=quizID)
+        except Http404:
+            return redirect('index')
+        try:
+            if (user.classes == quiz.classes) & (user.level == quiz.level) & (user.teacher == quiz.teacher):
                 questionList = get_list_or_404(Question, quiz=quizID)
                 context = {
-                    'questions': questionList
+                    'questions': questionList,
+                    'quiz': quizID,
                 }
-                print(context)
-        except:
-            if (request.user.id == quiz.teacher_id):
+                return render(request, 'quiz/quiz.html', context)
+        except Http404:
+            if (request.user.id == quiz.teacher):
                 questionList = get_list_or_404(Question, quiz=quizID)
                 context = {
                     'questions': questionList,
                     'quiz': quizID
                 }
-                print(context)
-
                 return render(request, 'quiz/quiz.html', context)
-    else:
-        return redirect('index')
+            return redirect('/')
+    return redirect('index')
 
 
 def create(request):
@@ -59,11 +61,10 @@ def create(request):
                 quiz_id = quiz_form_submit.pk
                 print(quiz_id)
                 # return redirect('quizzes')
-                return render(request, 'question/question.html', {'id': quiz_id, 'form': addQuestionForm})
-
+                return render(request, 'question/question.html', {'quiz_id': quiz_id, 'form': addQuestionForm})
             return redirect('quizzes')
         return render(request, 'quiz/createQuiz.html', {'form': form})
-    return render(request, 'quiz/createQuiz.html', {'form': form})
+    return redirect('index')
 
 
 def addQuestion(request):
@@ -82,22 +83,21 @@ def addQuestion(request):
                     quiz_Questions = get_list_or_404(Question, quiz_id=quizID)
                     context = {
                         'questions': quiz_Questions,
-                        'id': quizID,
+                        'quiz_id': quizID,
                         'form': addQuestionForm
                     }
                 except Http404:
                     context = {
-                        'id': quizID,
+                        'quiz_id': quizID,
                         'form': addQuestionForm
                     }
                 return render(request, 'question/question.html', context)
-            print('no work')
-            return render(request, 'question/question.html', {'id': quizID, 'form': addQuestionForm})
+            return render(request, 'question/question.html', {'quiz_id': quizID, 'form': addQuestionForm})
         return redirect('quizzes')
     return redirect('quizzes')
 
 
-def delete(request, questionID):
+def deleteQuestion(request, questionID):
     addQuestionForm = questionForm()
     if request.user.is_authenticated & request.user.is_staff:
         question = Question.objects.get(id=questionID)
@@ -118,21 +118,80 @@ def updateQuiz(request, quizID):
     if request.user.is_authenticated & request.user.is_staff:
         try:
             quiz = get_object_or_404(Quiz, id=quizID)
-        except:
-            print('whoops 3')
-            return redirect('index')
+            try:
+                scores = get_list_or_404(Score, quiz=quizID)
+            except:
+                scores = ''
+        except Http404:
+            return redirect('quizzes')
+
+        if request.method == 'POST':
+            form = quizForm(request.POST or None,
+                            request.FILES or None, instance=quiz)
+            print(form)
+            if form.is_valid():
+                print('suc')
+                form.save()
+                return redirect('quizzes')
         try:
             questionList = get_list_or_404(Question, quiz=quizID)
-            context = {
-                'questions': questionList
+            data = {
+                'title': quiz.title,
+                'classes': quiz.classes,
+                'level': quiz.level,
+                'image_path': quiz.image_path,
             }
-            print(context)
-        except:
+            preFilledForm = quizForm(initial=data)
+            context = {
+                'form': preFilledForm,
+                'id': quizID,
+                'questions': questionList,
+                'scores' : scores,
+            }
+            print(f'This is the score: {scores}')
+            return render(request, 'quiz/createQuiz.html', context)
+        except Http404:
+            print('whoops no questions')
             return redirect('index')
     return redirect('index')
 
 
 def updateQuestion(request, questionID):
+    if request.user.is_authenticated & request.user.is_staff:
+        question = get_object_or_404(Question, id=questionID)
+        if request.method == 'POST':
+            form = questionForm(request.POST or None,
+                                request.FILES or None, instance=question)
+            print(form)
+            if form.is_valid():
+                print('suc')
+                form.save()
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        try:
+            questionList = get_list_or_404(Question, quiz_id=question.quiz_id)
+            filtered_QuestionList = [
+                value for value in questionList if not value.id == questionID]
+            print(filtered_QuestionList)
+            data = {
+                'title': question.title,
+                'answer_1': question.answer_1,
+                'answer_2': question.answer_2,
+                'answer_3': question.answer_3,
+                'answer_4': question.answer_4,
+                'correct_answer': question.correct_answer,
+                'image_path': question.image_path,
+            }
+            preFilledForm = questionForm(initial=data)
+            context = {
+                'form': preFilledForm,
+                'id': questionID,
+                'quiz_id': question.quiz_id,
+                'questions': filtered_QuestionList,
+            }
+            return render(request, 'question/question.html', context)
+        except Http404:
+            print('whoops no questions')
+            return redirect('index')
     return redirect('index')
 
 
@@ -140,6 +199,7 @@ def submit(request):
     # TODO make it so if the question is wrong -- add it to a dict and show on page.
     if request.method == 'POST':
         score = 0
+        question = {}
         wrongAnswerList = []
         print(request.POST)
         submitted = {answer: request.POST[answer] for answer in request.POST.keys(
@@ -152,10 +212,36 @@ def submit(request):
                 score = score + 1
             else:
                 wrongAnswerList.append(question)
-
+        try:
+            quizValues = get_object_or_404(Quiz, pk=question.quiz.pk)
+            Score.objects.create(score=score, quiz=quizValues, teacher=quizValues.teacher,
+                                 first_name=request.user.first_name, last_name=request.user.last_name)
+        except Http404:
+            return redirect('quizzes')
+        # submitScore.save()
         context = {
             'wrongAnswer': wrongAnswerList,
             'score': score
         }
         return render(request, 'quiz/submitted.html', context)
-    return redirect('quizzes')
+    return redirect('quizzes')    
+
+    # try: looping dict useful
+
+    #     question = Question.objects.get(id=questionID)
+
+    #     formatted_values = {value: request.POST[value] for value in request.POST.key(
+
+    #     ) - {'csrfmiddlewaretoken', 'id'}}
+
+    #     for key in formatted_values:
+
+    #         question.key = formatted_values[key]
+
+    #     print(question)
+
+    #     return redirect('quizzes')
+
+    # except Http404:
+
+    #     return redirect('index')

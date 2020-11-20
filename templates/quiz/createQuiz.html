@@ -8,6 +8,58 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <div class="wrapper-content">
+    {% comment %} Update Block - contains student scores {% endcomment %}
+
+    {% if id %}
+    <div class="container_body">
+        <h1 class="heading_1"> Update Quiz </h1>
+        <form action="/quizzes/update/quiz/{{id}}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="quiz_container">
+                {{field.error}}
+                {{field.label_tag}}
+                {{field}}
+            </div>
+            {% endfor %}
+            <input class="submit_btn" type="submit" />
+        </form>
+        <form action="/quizzes/add" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="quiz_id" value="{{id}}">
+            <input class="submit_btn" value='Add New Question' type="submit">
+        </form>
+    </div>
+
+    <div class="question_container">
+        <h1> Update Questions </h1>
+        {% for question in questions %}
+        <br>
+        <div class="question_container">
+            <div class="value_container">
+                <a href="/quizzes/update/question/{{question.id}}">
+                    <h2 class="question_title"> {{ question.title }} </h2>
+                </a>
+                <a class="deleteQuestion " href="quizzes/delete/question/{{question.id}}"> <i
+                        class="fas fa-times-circle"></i> </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% if scores|length != 0 %}
+    <div class="score_container">
+        <h1> Scores: </h1>
+        {% for score in scores  %}
+        <div class="score">
+            <br>
+            <h2 class="scoreStudentName">{{score.first_name}} {{score.last_name}}</h2>
+            <h2 class="scoreStudentScore">{{score.score}}</h2>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% else %}
+    {% comment %} Creation Block {% endcomment %}
     <h1 class="heading_1"> Create Quiz </h1>
     <div class="container_body">
         <form action="/quizzes/create" method="POST" enctype="multipart/form-data">
@@ -22,6 +74,7 @@
             <input class="submit_btn" type="submit" />
         </form>
     </div>
+    {% endif %}
 
 </div>
 {% endblock %}

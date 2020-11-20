@@ -8,6 +8,9 @@
     text-decoration: none;
     font-family: 'Josefin Sans', sans-serif;
 }
+a {
+    color: black;
+}
 
 body {
     background-color: #f3f5f9;
@@ -26,7 +29,7 @@ body {
     }
 
     .wrapper a {
-        color: white;
+        color: black;
         padding: 20px 22px;
         text-decoration: none;
         font-size: 17px;
@@ -58,7 +61,7 @@ body {
         padding: 15px 8px 8px 32px;
         text-decoration: none;
         font-size: 25px;
-        color: white;
+        /* color: white; */
         display: block;
         transition: 0.3s;
     }

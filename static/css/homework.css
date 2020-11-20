@@ -7,3 +7,24 @@
 .homework_container .homework_teacher {
 	color: black;
 }
+
+.container_body {
+	width: 100%;
+}
+
+.quiz_container {
+	width: 80%;
+	background: #dedee0;
+	color: black;
+
+
+}
+.score_container {
+	float: right;
+	width: 500px;
+}
+
+.score_container .score {
+	width: 100%;
+	display: inline-block;
+}

@@ -10,34 +10,16 @@
     position: relative;
     height: 200px;
 }
-
-.submitEntity_name {
-    position: absolute;
-    /* float: inline-end; */
-    top: 20px;
-    margin: 10px 0 10px 0;
-}
-
-.submitEntity_desc {
-    position: absolute;
-    bottom: 30px;
-}
-
-.submitEntity_btn {
-    position: absolute;
-    bottom: 0;
-}
-
 .form_container {
     align-items: center;
     width: 300px;
     margin: 20px 0px 0px 0px;
 }
-.signin {
+.submit_btn {
     background: #e2ba5b;
     color: black;
     cursor: pointer;
-    font-size: 2em;
+    font-size: 1em;
     padding: 1.5rem;
     border: 0;
     transition: all 0.5s;
@@ -46,7 +28,7 @@
     position: relative;
 }
 
-.signin:hover {
+.submit_btn:hover {
     background: #F0E68C;
     transition: all 0.5s;
     border-radius: 10px;

@@ -31,32 +31,38 @@
     </style>
 </head>
 <div class="wrapper-content">
-    <a href='/quizzes/create'><button class="submit_btn" type="button"> Create Quiz </button></a>
 
     <h1 class="heading_1"> Dashboard </h1>
     <div class="container_body">
         <h3> Quizzes </h3>
         <br>
-
+        {% if user.is_staff %}
+        <a href='/quizzes/create'><button class="submit_btn" type="button"> Create Quiz </button></a>
         {% for quiz in quizzes  %}
-        <a href="/quizzes/update/{{quiz.id}}">
+        <a href="/quizzes/update/quiz/{{quiz.id}}">
             <div class="quiz_container">
                 {% comment %} <img class="entity_img" src="{{entity.image.url}}" /> {% endcomment %}
                 <h2 class="quiz_title"> {{ quiz.title }} </h2>
                 <h5 class="quiz_desc"> {{ quiz.get_classes_display }}</h5>
                 <h5 class="quiz_desc"> {{ quiz.get_level_display }}</h5>
                 <a href="quizzes/delete/quiz/{{quiz.id}}"> <i class="fas fa-times-circle"></i>
-
-
-                {% comment %} entity.get_*field*_display - displays the humanreadble values
-                <h5 class="homework_due"> {{ work.due }} </h5>
-                <h6 class="homework_teacher"> set by: {{work.teacher.user.first_name}}
-                    {{ work.teacher.user.last_name}}
-                </h6>
-                {% endcomment %}
+            </div>
+            </a>
+            {% endfor %}
+            {% else %}
+            {% for quiz in quizzes  %}
+            <a href="/quizzes/{{quiz.id}}">
+                <div class="quiz_container">
+                    {% if quiz.image_path %}
+                    <img class="quiz_img" src="{{quiz.image_path.url}}" />
+                    {% endif %}
+                    <h2 class="quiz_title"> {{ quiz.title }} </h2>
+                    <h5 class="quiz_desc"> {{ quiz.get_classes_display }}</h5>
+                    <h5 class="quiz_desc"> {{ quiz.get_level_display }}</h5>
             </div>
         </a>
         {% endfor %}
+        {% endif %}
         <br>
     </div>
 
