@@ -69,9 +69,31 @@ body {
     .wrapper .sidenav img {
         width: 100%;
     }
+.message_container {
+    width: 200px;
+    height: 35px;
+    text-align: center;
+    background-color: #e2ba5b;
+    position: absolute;
+    top: 2%;
+    right: 25%;
+    border: #717171 1px solid;
+    }
 }
 
 @media only screen and (min-device-width: 480px) {
+    .message_container {
+        width: 200px;
+        height: 35px;
+        text-align: center;
+        background-color: #e2ba5b;
+        position: absolute;
+        top: 2%;
+        right: 50%;
+        /* right: 10%; */
+        border: #717171 1px solid;
+    }
+
     .wrapper .menu {
         display: none;
     }

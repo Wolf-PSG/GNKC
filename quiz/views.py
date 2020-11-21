@@ -1,3 +1,5 @@
+from django.contrib import messages
+from django.contrib.messages.api import error
 from django.http.response import Http404
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from .models import Question, Quiz
@@ -29,7 +31,7 @@ def quiz(request, quizID):
                     'quiz': quizID,
                 }
                 return render(request, 'quiz/quiz.html', context)
-        except Http404:
+        except:
             if (request.user.id == quiz.teacher):
                 questionList = get_list_or_404(Question, quiz=quizID)
                 context = {
@@ -60,6 +62,8 @@ def create(request):
                 quiz_form_submit.save()
                 quiz_id = quiz_form_submit.pk
                 print(quiz_id)
+                messages.success(request, 'Quiz Created')
+
                 # return redirect('quizzes')
                 return render(request, 'question/question.html', {'quiz_id': quiz_id, 'form': addQuestionForm})
             return redirect('quizzes')
@@ -130,29 +134,27 @@ def updateQuiz(request, quizID):
                             request.FILES or None, instance=quiz)
             print(form)
             if form.is_valid():
-                print('suc')
                 form.save()
                 return redirect('quizzes')
         try:
             questionList = get_list_or_404(Question, quiz=quizID)
-            data = {
-                'title': quiz.title,
-                'classes': quiz.classes,
-                'level': quiz.level,
-                'image_path': quiz.image_path,
-            }
-            preFilledForm = quizForm(initial=data)
-            context = {
-                'form': preFilledForm,
-                'id': quizID,
-                'questions': questionList,
-                'scores' : scores,
-            }
-            print(f'This is the score: {scores}')
-            return render(request, 'quiz/createQuiz.html', context)
         except Http404:
-            print('whoops no questions')
-            return redirect('index')
+            questionList = ''
+        data = {
+            'title': quiz.title,
+            'classes': quiz.classes,
+            'level': quiz.level,
+            'image_path': quiz.image_path,
+        }
+        preFilledForm = quizForm(initial=data)
+        context = {
+            'form': preFilledForm,
+            'id': quizID,
+            'questions': questionList,
+            'scores': scores,
+        }
+        print(f'This is the score: {scores}')
+        return render(request, 'quiz/createQuiz.html', context)
     return redirect('index')
 
 
@@ -224,7 +226,7 @@ def submit(request):
             'score': score
         }
         return render(request, 'quiz/submitted.html', context)
-    return redirect('quizzes')    
+    return redirect('quizzes')
 
     # try: looping dict useful
 

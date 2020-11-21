@@ -16,7 +16,7 @@
         <form action="/quizzes/update/quiz/{{id}}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {% for field in form %}
-            <div class="quiz_container">
+            <div class="quiz_create_container">
                 {{field.error}}
                 {{field.label_tag}}
                 {{field}}
@@ -33,6 +33,7 @@
 
     <div class="question_container">
         <h1> Update Questions: </h1>
+        {% if questions|length != 0 %}
         {% for question in questions %}
         <br>
         <div class="question_container">
@@ -45,6 +46,7 @@
             </div>
         </div>
         {% endfor %}
+        {% endif %}
     </div>
     {% if scores|length != 0 %}
     <div class="score_container">

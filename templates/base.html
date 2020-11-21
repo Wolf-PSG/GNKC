@@ -102,21 +102,27 @@
         </div>
 
         {% if messages %}
-        <script>
-            $("#message_container").click(function () {
-                console.log('click')
-                $(this).parent().parent().remove();
-            });
-        </script>
-        <div class="footer">
-            <div class="message_container" id="message_container">
+        <div class="message_container" id="message_container">
+            <div>
                 <ul class="messages">
                     {% for message in messages %}
-                    <li{% if message.tags %} class="message" {% endif %}>{{ message }}</li>
-                        {% endfor %}
+                    <li {% if message.tags %} class="message" {% endif %}>{{ message }}</li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
+        <script>
+            var message_ele = document.getElementById("message_container");
+
+            setTimeout(function () {
+                message_ele.style.display = "none";
+            }, 3000);
+            //$("#message_container").click(function () {
+            //  console.log('click')
+            //console.log(this)
+            //$(this).parent().parent().remove();
+            //});
+        </script>
         {% endif %}
     </div>
 

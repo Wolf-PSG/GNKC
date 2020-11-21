@@ -108,9 +108,10 @@ def homework(request):
                 new_form.teacher = teacher_id
                 new_form.save()
                 print('worked')
+                messages.info(request, 'Homework set')
                 return redirect('dashboard')
             else:
-                print('error in form')
+                messages.info(request, 'Error in Homework Form')
                 form = HomeworkForm()
                 return render(request, 'dashboard/setHomework.html', {'form': form})
         else:
@@ -130,10 +131,6 @@ def quizzes(request):
             print(quizzes)
             quiz_Data = list(quizzes.values())
             print(quiz_Data)
-            # print(quiz_id[0]['id'])
-            # questions = Question.objects.select_related(
-            #     'quiz').get(quiz=quiz_id[0]['id'])
-            # print(questions.answer_1)
             context = {
                 'quizzes': quizzes,
                 # 'questions': questions
@@ -141,9 +138,6 @@ def quizzes(request):
             return render(request, 'quiz/quizzes.html', context)
         else:
             student = get_object_or_404(Students, user_id=request.user.id)
-            # homework_queryset = Homework.objects.select_related('teacher').filter(
-            # teacher=student.teacher)
-
             quiz = get_list_or_404(
                 Quiz, classes=student.classes, level=student.level, teacher=student.teacher)
 
