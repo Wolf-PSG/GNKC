@@ -18,3 +18,28 @@
 	box-shadow: 0px 6px 15px black;
 	padding: 1.5rem 3.5rem 1.5rem 1.5rem;
 }
+
+.old_questions_container {
+	display: flex;
+	width: 100%;
+	position: relative;
+	border: black 1px solid;
+    padding: 10px;
+    margin-top: 10px;
+}
+.old_questions_container .delete_button_question {
+	position: absolute;
+	display: flex;
+	right: 0;
+	padding: 2px 5px 2px 5px;
+}
+
+.delete_button_question:hover {
+	color: #e2ba5b;
+	transition: all 0.5s;
+}
+
+.old_questions_title:hover {
+	color: #e2ba5b;
+	transition: all 0.5s;
+}

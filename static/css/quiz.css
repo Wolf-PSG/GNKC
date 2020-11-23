@@ -97,6 +97,11 @@
 	.wrapper-content {
 		display: flex;
 		flex-direction: row;
+		/* flex-wrap: wrap; */
+	}
+
+	.container_create_body {
+		flex-basis: 100%;
 	}
 
 	.container_body {
@@ -136,7 +141,6 @@
 	.value_container .deleteQuestion {
 		position: absolute;
 		display: flex;
-		float: left;
 		right: 0;
 		padding: 2px 5px 2px 5px;
 	}

@@ -52,24 +52,23 @@ def create(request):
     addQuestionForm = questionForm()
     if request.user.is_authenticated & request.user.is_staff:
         if request.method == 'POST':
-            print(request.user.id)
-            teacher_id = get_object_or_404(Teacher, user_id=request.user.pk)
-            print(teacher_id.pk)
-            print(request.POST)
-            quizSubmit = quizForm(request.POST, request.FILES)
-            print(quizSubmit)
-            if quizSubmit.is_valid():
-                print('valid')
-                quiz_form_submit = quizSubmit.save(commit=False)
-                quiz_form_submit.teacher_id = teacher_id.pk
-                quiz_form_submit.save()
-                quiz_id = quiz_form_submit.pk
-                print(quiz_id)
-                messages.success(request, 'Quiz Created')
-
-                # return redirect('quizzes')
-                return render(request, 'question/question.html', {'quiz_id': quiz_id, 'form': addQuestionForm})
-            return redirect('quizzes')
+            try:
+                teacher_id = get_object_or_404(
+                    Teacher, user_id=request.user.pk)
+                quizSubmit = quizForm(request.POST, request.FILES)
+                if quizSubmit.is_valid():
+                    print('valid')
+                    quiz_form_submit = quizSubmit.save(commit=False)
+                    quiz_form_submit.teacher_id = teacher_id.pk
+                    quiz_form_submit.save()
+                    quiz_id = quiz_form_submit.pk
+                    messages.success(request, 'Quiz Created')
+                    return render(request, 'question/question.html', {'quiz_id': quiz_id, 'form': addQuestionForm})
+                return redirect('quizzes')
+            except:
+                messages.error(
+                    request, 'error in creation - please speak to admin')
+                return redirect('quizzes')
         return render(request, 'quiz/createQuiz.html', {'form': form})
     messages.error(
         request, 'You are not authenticated')
@@ -80,28 +79,32 @@ def addQuestion(request):
     addQuestionForm = questionForm()
     if request.user.is_authenticated & request.user.is_staff:
         if request.method == 'POST':
-            print(request.POST)
-            questionSubmit = questionForm(request.POST, request.FILES)
-            quizID = request.POST['quiz_id']
-            quizInstance = get_object_or_404(Quiz, pk=quizID)
-            if questionSubmit.is_valid():
-                question_form_submit = questionSubmit.save(commit=False)
-                question_form_submit.quiz = quizInstance
-                question_form_submit.save()
-                try:
-                    quiz_Questions = get_list_or_404(Question, quiz_id=quizID)
-                    context = {
-                        'questions': quiz_Questions,
-                        'quiz_id': quizID,
-                        'form': addQuestionForm
-                    }
-                except Http404:
-                    context = {
-                        'quiz_id': quizID,
-                        'form': addQuestionForm
-                    }
-                return render(request, 'question/question.html', context)
-            return render(request, 'question/question.html', {'quiz_id': quizID, 'form': addQuestionForm})
+            try:
+                questionSubmit = questionForm(request.POST, request.FILES)
+                quizID = request.POST['quiz_id']
+                quizInstance = get_object_or_404(Quiz, pk=quizID)
+                if questionSubmit.is_valid():
+                    question_form_submit = questionSubmit.save(commit=False)
+                    question_form_submit.quiz = quizInstance
+                    question_form_submit.save()
+                    try:
+                        quiz_Questions = get_list_or_404(Question, quiz_id=quizID)
+                        context = {
+                            'questions': quiz_Questions,
+                            'quiz_id': quizID,
+                            'form': addQuestionForm
+                        }
+                    except Http404:
+                        context = {
+                            'quiz_id': quizID,
+                            'form': addQuestionForm
+                        }
+                    return render(request, 'question/question.html', context)
+                return render(request, 'question/question.html', {'quiz_id': quizID, 'form': addQuestionForm})
+            except:
+                messages.error(
+                    request, 'error in creation - please speak to admin')
+                return redirect('quizzes')
     messages.error(request, 'You are not authenticated')
     return redirect('quizzes')
 
@@ -146,7 +149,6 @@ def updateQuiz(request, quizID):
         if request.method == 'POST':
             form = quizForm(request.POST or None,
                             request.FILES or None, instance=quiz)
-            print(form)
             if form.is_valid():
                 form.save()
                 return redirect('quizzes')
@@ -168,7 +170,6 @@ def updateQuiz(request, quizID):
             'questions': questionList,
             'scores': scores,
         }
-        print(f'This is the score: {scores}')
         return render(request, 'quiz/createQuiz.html', context)
     messages.error(
         request, 'You are not authenticated')
@@ -182,16 +183,13 @@ def updateQuestion(request, questionID):
         if request.method == 'POST':
             form = questionForm(request.POST or None,
                                 request.FILES or None, instance=question)
-            print(form)
             if form.is_valid():
-                print('suc')
                 form.save()
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         try:
             questionList = get_list_or_404(Question, quiz_id=question.quiz_id)
             filtered_QuestionList = [
                 value for value in questionList if not value.id == questionID]
-            print(filtered_QuestionList)
             data = {
                 'title': question.title,
                 'answer_1': question.answer_1,
@@ -223,10 +221,8 @@ def submit(request):
         score = 0
         question = {}
         wrongAnswerList = []
-        print(request.POST)
         submitted = {answer: request.POST[answer] for answer in request.POST.keys(
         ) - {'csrfmiddlewaretoken', 'id'}}
-        print(submitted)
 
         for id in submitted:
             question = get_object_or_404(Question, id=id)
