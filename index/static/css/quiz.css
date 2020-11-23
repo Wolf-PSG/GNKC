@@ -12,9 +12,9 @@
 
 	.question_container {
 		margin-top: 20px;
-		max-height: 300px;
+		/* max-height: 300px; */
 		min-width: 150px;
-		max-width: 45%;
+		max-width: 100%;
 		color: black;
 		/* display: flex; */
 		padding-right: 50px;
@@ -52,8 +52,8 @@
 
 	.score_container {
 		margin-top: 30px;
-		display: inline-block;
-		/* float: right; */
+		/* display: inline-block; */
+		float: left;
 		/* position: absolute; */
 		width: 50%;
 	}
@@ -62,6 +62,7 @@
 		display: flex;
 		width: 100%;
 		position: relative;
+		margin-top: 20px;
 	}
 
 	.score .scoreStudentScore {
@@ -106,7 +107,7 @@
 
 	.question_container {
 		/* margin-top: 20px; */
-		max-height: 300px;
+		/* max-height: 300px; */
 		min-width: 150px;
 		max-width: 45%;
 		color: black;
@@ -135,6 +136,7 @@
 	.value_container .deleteQuestion {
 		position: absolute;
 		display: flex;
+		float: left;
 		right: 0;
 		padding: 2px 5px 2px 5px;
 	}
@@ -155,6 +157,7 @@
 		display: flex;
 		width: 100%;
 		position: relative;
+		margin-top: 20px;
 	}
 
 	.score .scoreStudentScore {

@@ -53,9 +53,10 @@
         <h1> Scores: </h1>
         {% for score in scores  %}
         <div class="score">
-            <br>
-            <h2 class="scoreStudentName">{{score.first_name}} {{score.last_name}}</h2>
+            <br />
+            <h2 class="scoreStudentName">{{score.first_name}} {{score.last_name}}:</h2>
             <h2 class="scoreStudentScore">{{score.score}}</h2>
+            <br />
         </div>
         {% endfor %}
     </div>

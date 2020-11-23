@@ -34,15 +34,24 @@ def enrolment(request):
         form = enrolmentForm(request.POST)
         if form.is_valid():
             if form.cleaned_data['termsRead'] == '1':
-                messages.info(request, 'Form sent')
-                print('worked')
-                return render(request, 'index/index.html')
+                messages.success(request, 'Form sent')
+                subject = form.cleaned_data['name']
+                email = form.cleaned_data['email']
+                message = form.cleaned_data['message']
+                try:
+                    send_mail(subject, (email + message), 'mythosAPI@gmail.com',
+                              ['parmjit.singh.1199@gmail.com'], fail_silently=True)
+                    messages.success(request, 'Email sent')
+                    return redirect('index')
+                except:
+                    form = enrolmentForm()
+                    messages.error(
+                        request, 'Error sending form, please email admin')
             else:
                 form = enrolmentForm()
-            # subject = form.cleaned_data['name']
-            # email = form.cleaned_data['email']
-            # message = form.cleaned_data['message']
-            # send_mail(subject, (email + message), 'mythosAPI@gmail.com', ['parmjit.singh.1199@gmail.com'], fail_silently=False)
+                messages.error(
+                    request, 'Error sending form, please email admin')
+
     else:
         form = enrolmentForm()
     return render(request, 'index/enrolment.html', {'form': form})
@@ -59,8 +68,15 @@ def parental(request):
             subject = form.cleaned_data['name']
             email = form.cleaned_data['email']
             message = form.cleaned_data['message']
-            send_mail(subject, (f"from {email} \n {message}"), 'mythosAPI@gmail.com', [
-                      'parmjit.singh.1199@gmail.com'], fail_silently=False)
+            try:
+                send_mail(subject, (f"from {email} \n {message}"), 'mythosAPI@gmail.com', [
+                        'parmjit.singh.1199@gmail.com'], fail_silently=False)
+                messages.success(request, 'Email Sent')
+                return redirect('index')
+            except:
+                form = emailForm()
+                messages.error(
+                    request, 'Error sending form, please email admin')
     else:
         form = emailForm()
     return render(request, 'index/parental.html', {'form': form})
@@ -70,8 +86,7 @@ def dashboard(request):
     if request.user.is_authenticated:
         if request.user.is_staff:
             print(request.user.id)
-            teacher_id = Teacher.objects.select_related(
-                'user').get(user=request.user.id)
+            teacher_id = get_object_or_404(Teacher, user=request.user.id)
             homework = Homework.objects.select_related(
                 'teacher').filter(teacher=teacher_id)
             context = {
@@ -90,8 +105,9 @@ def dashboard(request):
                 'homework': homework
             }
             return render(request, 'dashboard/dashboard.html', context)
-    else:
-        return redirect('index')
+    messages.error(
+        request, 'You are not authenticated')
+    return redirect('index')
 
 
 def homework(request):
@@ -117,15 +133,15 @@ def homework(request):
         else:
             form = HomeworkForm()
             return render(request, 'dashboard/setHomework.html', {'form': form})
-    else:
-        return redirect('index')
+    messages.error(
+        request, 'You are not authenticated')
+    return redirect('index')
 
 
 def quizzes(request):
     if request.user.is_authenticated:
         if request.user.is_staff:
-            teacher_id = Teacher.objects.select_related(
-                'user').get(user_id=request.user.pk)
+            teacher_id = get_object_or_404(Teacher, user_id=request.user.id)
             quizzes = Quiz.objects.select_related(
                 'teacher').filter(teacher=teacher_id)
             print(quizzes)
@@ -145,4 +161,6 @@ def quizzes(request):
                 'quizzes': quiz
             }
             return render(request, 'quiz/quizzes.html', context)
-    return redirect('/')
+    messages.error(
+        request, 'You are not authenticated')
+    return redirect('index')

@@ -30,8 +30,8 @@ class Students(models.Model):
   studentID = models.AutoField(primary_key=True)
   user = models.OneToOneField(
 	  User, null=True, blank=True, on_delete=models.CASCADE)
-  teacher = models.OneToOneField(
-	  Teacher, null=True, blank=True, on_delete=models.CASCADE)
+  teacher = models.ForeignKey(
+      Teacher, null=True, blank=True, unique=False, on_delete=models.CASCADE)
   level = models.CharField(max_length=2, choices=levelOptions, default=1)
   classes = models.CharField(max_length=2, choices=classOptions, default=1)
   def __str__(self):

@@ -39,3 +39,7 @@
 .image_slideshow {
     margin: 20px;
 }
+
+.image {
+    max-height: 650px;
+}

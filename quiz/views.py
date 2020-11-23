@@ -16,30 +16,34 @@ from django.http import HttpResponseRedirect
 
 
 def quiz(request, quizID):
-    user = {}
     if request.user.is_authenticated:
         try:
             user = get_object_or_404(Students, user_id=request.user.id)
-            quiz = get_object_or_404(Quiz, id=quizID)
+            quiz = get_object_or_404(Quiz, pk=quizID)
         except Http404:
             return redirect('index')
         try:
-            if (user.classes == quiz.classes) & (user.level == quiz.level) & (user.teacher == quiz.teacher):
-                questionList = get_list_or_404(Question, quiz=quizID)
+            # if (user.classes == quiz.classes) & (user.level == quiz.level) & (user.teacher == quiz.teacher):
+            try:
+                get_object_or_404(
+                    Score, first_name=request.user.first_name, last_name=request.user.last_name, quiz_id=quizID)
+                messages.info(request, 'You have already done this quiz')
+                return redirect('/')
+            except Http404:
+                questionList = get_list_or_404(Question, quiz_id=quizID)
+                print(questionList)
                 context = {
                     'questions': questionList,
                     'quiz': quizID,
                 }
+                print('worked')
                 return render(request, 'quiz/quiz.html', context)
-        except:
-            if (request.user.id == quiz.teacher):
-                questionList = get_list_or_404(Question, quiz=quizID)
-                context = {
-                    'questions': questionList,
-                    'quiz': quizID
-                }
-                return render(request, 'quiz/quiz.html', context)
-            return redirect('/')
+        except Http404:
+            messages.error(
+                request, 'You are not authenticated')
+            return redirect('index')
+    messages.error(
+        request, 'You are not authenticated')
     return redirect('index')
 
 
@@ -49,8 +53,7 @@ def create(request):
     if request.user.is_authenticated & request.user.is_staff:
         if request.method == 'POST':
             print(request.user.id)
-            teacher_id = Teacher.objects.select_related(
-                'user').get(user_id=request.user.pk)
+            teacher_id = get_object_or_404(Teacher, user_id=request.user.pk)
             print(teacher_id.pk)
             print(request.POST)
             quizSubmit = quizForm(request.POST, request.FILES)
@@ -68,6 +71,8 @@ def create(request):
                 return render(request, 'question/question.html', {'quiz_id': quiz_id, 'form': addQuestionForm})
             return redirect('quizzes')
         return render(request, 'quiz/createQuiz.html', {'form': form})
+    messages.error(
+        request, 'You are not authenticated')
     return redirect('index')
 
 
@@ -97,7 +102,7 @@ def addQuestion(request):
                     }
                 return render(request, 'question/question.html', context)
             return render(request, 'question/question.html', {'quiz_id': quizID, 'form': addQuestionForm})
-        return redirect('quizzes')
+    messages.error(request, 'You are not authenticated')
     return redirect('quizzes')
 
 
@@ -108,13 +113,20 @@ def deleteQuestion(request, questionID):
         quizID = question.quiz_id
         question.delete()
         return render(request, 'question/question.html', {'id': quizID, 'form': addQuestionForm})
+    messages.error(
+        request, 'You are not authenticated')
+    return redirect('index')
 
 
 def deleteQuiz(request, quizID):
     if request.user.is_authenticated & request.user.is_staff:
         quiz = Quiz.objects.get(id=quizID)
         quiz.delete()
+        messages.success(
+            request, 'quiz deleted')
         return redirect('quizzes')
+    messages.error(
+        request, 'You are not authenticated')
     return redirect('index')
 
 
@@ -127,6 +139,8 @@ def updateQuiz(request, quizID):
             except:
                 scores = ''
         except Http404:
+            messages.error(
+                request, 'Error in finding quiz - speak to admin')
             return redirect('quizzes')
 
         if request.method == 'POST':
@@ -140,6 +154,7 @@ def updateQuiz(request, quizID):
             questionList = get_list_or_404(Question, quiz=quizID)
         except Http404:
             questionList = ''
+        # checks if questionList exisits
         data = {
             'title': quiz.title,
             'classes': quiz.classes,
@@ -155,6 +170,9 @@ def updateQuiz(request, quizID):
         }
         print(f'This is the score: {scores}')
         return render(request, 'quiz/createQuiz.html', context)
+    messages.error(
+        request, 'You are not authenticated')
+
     return redirect('index')
 
 
@@ -192,7 +210,9 @@ def updateQuestion(request, questionID):
             }
             return render(request, 'question/question.html', context)
         except Http404:
-            print('whoops no questions')
+            messages.error(
+                request, 'could not find questions - speak to admin')
+
             return redirect('index')
     return redirect('index')
 
@@ -219,6 +239,8 @@ def submit(request):
             Score.objects.create(score=score, quiz=quizValues, teacher=quizValues.teacher,
                                  first_name=request.user.first_name, last_name=request.user.last_name)
         except Http404:
+            messages.error(
+                request, 'Error in sending results - speak to admin')
             return redirect('quizzes')
         # submitScore.save()
         context = {

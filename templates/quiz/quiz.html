@@ -3,23 +3,9 @@
 {% block content %}
 
 <head>
-    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/homework.css' %}">
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/playquiz.css' %}">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <style>
-        .answer_container {
-            display: flex;
-        }
-
-        .homework_title {
-            padding: 0px 0px 10px 0px;
-        }
-
-        .answer_choice {
-            float: left;
-            padding: 0px 10px 0px 20px;
-        }
-    </style>
 </head>
 <div class="wrapper-content">
     <h1 class="heading_1"> Dashboard </h1>
@@ -30,12 +16,14 @@
             {% csrf_token %}
             <input type="hidden" name="id" value={{quiz}}>
             {% for question in questions  %}
-            <div class="homework_container">
-                {% comment %} <img class="entity_img" src="{{entity.image.url}}" /> {% endcomment %}
-                <h2 class="homework_title"> {{ question.title }} </h2>
+            <div class="quiz_container">
+                {% if question.image_path %}
+                <img class="question_img" src="{{question.image_path.url}}" />
+                {% endif %}
+                <h2 class="question_title"> {{ question.title }} </h2>
                 <div class="answer_container">
                     <h5 class="answer_choice"> {{ question.answer_1 }}</h5>
-                    <input type="radio" class=answer name={{question.id}} value='1'>
+                    <input type="radio" name={{question.id}} value='1'>
                     <h5 class="answer_choice"> {{ question.answer_2 }}</h5>
                     <input type="radio" name={{question.id}} value='2'>
                     <h5 class="answer_choice"> {{ question.answer_3 }}</h5>
@@ -46,7 +34,7 @@
             </div>
             {% endfor %}
             <input class="submit_btn" type="submit" />
-            </form>
+        </form>
 
         <br>
     </div>

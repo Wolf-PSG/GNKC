@@ -1,4 +1,5 @@
 from django.http.response import Http404
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Homework
 
@@ -10,7 +11,11 @@ def delete_Homework(request, homeworkID):
         try:
             homework = get_object_or_404(Homework, id=homeworkID)
             homework.delete()
+            messages.success(request, 'Homework deleted')
             return redirect('dashboard')
         except Http404:
-            print('no homework found')
+            messages.error(request, 'No homework found matching id')
             return redirect('dashboard')
+    messages.error(
+        request, 'You are not authenticated')
+    return redirect('index')
