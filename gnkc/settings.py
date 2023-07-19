@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_unq90(y^2pgiz+u8^_de8)n%zynd0apkby)hvveb4ab!uzf)1'
+SECRET_KEY = SECRET_KET
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -171,8 +171,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'index/static/')
 ]
 
-AWS_SECRET_ACCESS_KEY = 'wGt9ikDDqQHwc0OtQtLPeNYhP8G2bnCWu9nTVUQe'
-AWS_ACCESS_KEY_ID = 'AKIA2SJHJM6CDYBRIKGL'
+AWS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY
+AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID
 AWS_S3_REGION_NAME = 'eu-west-2'
 AWS_STORAGE_BUCKET_NAME = 'gnkc'
 AWS_S3_FILE_OVERWRITE = False
